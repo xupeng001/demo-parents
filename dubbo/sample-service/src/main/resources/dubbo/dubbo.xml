@@ -6,7 +6,7 @@
 	default-autowire="byName">
 
 	<dubbo:application id="dubboApplication" name="${spring.application.name}" />
-	<dubbo:registry id="wbPortalRegistry" address="${dubbo.registry.address}" />
+	<dubbo:registry id="wbPortalRegistry" address="${dubbo.registry.address}"  />
 
 
 	<import resource="classpath:/dubbo/dubbo-provider.xml" />

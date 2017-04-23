@@ -16,7 +16,7 @@ public class ListTest1 {
 
     @Test
     public void test() {
-        List<String> list = new ArrayList<>();
+        List<String> list = new ArrayList<String>();
         list.add(null);
         Set<String> set = new HashSet<String>();
         set.add(null);

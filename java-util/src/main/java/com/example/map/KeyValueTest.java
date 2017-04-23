@@ -2,6 +2,7 @@ package com.example.map;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.Set;
@@ -32,6 +33,9 @@ public class KeyValueTest {
 
         map = new HashMap<String, String>();
         map.put(null, "a");
+        System.out.println(map.get(null));
+        map = new Hashtable<String, String>();
+        map.put( "a",null);
         System.out.println(map.get(null));
     }
 }

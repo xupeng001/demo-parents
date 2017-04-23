@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<xsd:schema xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:tool="http://www.springframework.org/schema/tool"
+	targetNamespace="http://localhost/schema/values"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+	<xsd:import namespace="http://www.springframework.org/schema/beans"
+		schemaLocation="http://www.springframework.org/schema/beans/spring-beans-4.2.xsd" />
+	<xsd:import namespace="http://www.springframework.org/schema/tool"
+		schemaLocation="http://www.springframework.org/schema/tool/spring-tool-4.2.xsd" />
+
+	
+	<xsd:element name="interceptors">
+		<xsd:annotation>
+			<xsd:documentation><![CDATA[
+	The ordered set of interceptors that intercept HTTP Servlet Requests handled by Controllers.
+	Interceptors allow requests to be pre/post processed before/after handling.
+	Each interceptor must implement the org.springframework.web.servlet.HandlerInterceptor or
+	org.springframework.web.context.request.WebRequestInterceptor interface.
+	The interceptors in this set are automatically detected by every registered HandlerMapping.
+	The URI paths each interceptor applies to are configurable.
+			]]></xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:choice maxOccurs="unbounded">
+				<xsd:choice>
+					<xsd:element ref="beans:bean">
+						<xsd:annotation>
+							<xsd:documentation><![CDATA[
+	Registers an interceptor that intercepts every request regardless of its URI path..
+								]]></xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:choice>
+				<xsd:element name="interceptor">
+					<xsd:annotation>
+						<xsd:documentation
+							source="java:org.springframework.web.servlet.handler.MappedInterceptor"><![CDATA[
+	Registers an interceptor that interceptors requests sent to one or more URI paths.
+						]]></xsd:documentation>
+					</xsd:annotation>
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="mapping" maxOccurs="unbounded">
+								<xsd:complexType>
+									<xsd:attribute name="path" type="xsd:string" use="required">
+										<xsd:annotation>
+											<xsd:documentation><![CDATA[
+	A path into the application intercepted by this interceptor.
+	Exact path mapping URIs (such as "/myPath") are supported as well as Ant-stype path patterns (such as /myPath/**).
+											]]></xsd:documentation>
+										</xsd:annotation>
+									</xsd:attribute>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element name="exclude-mapping" minOccurs="0"
+								maxOccurs="unbounded">
+								<xsd:complexType>
+									<xsd:attribute name="path" type="xsd:string" use="required">
+										<xsd:annotation>
+											<xsd:documentation><![CDATA[
+	A path into the application that should not be intercepted by this interceptor.
+	Exact path mapping URIs (such as "/admin") are supported as well as Ant-stype path patterns (such as /admin/**).
+											]]></xsd:documentation>
+										</xsd:annotation>
+									</xsd:attribute>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:choice>
+								<xsd:element ref="beans:bean">
+									<xsd:annotation>
+										<xsd:documentation><![CDATA[
+		The interceptor's bean definition.
+										]]></xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+								<xsd:element ref="beans:ref">
+									<xsd:annotation>
+										<xsd:documentation><![CDATA[
+		A reference to an interceptor bean.
+										]]></xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+							</xsd:choice>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:choice>
+			<xsd:attribute name="path-matcher" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation source="java:org.springframework.util.PathMatcher"><![CDATA[
+	The bean name of a PathMatcher implementation to use with nested interceptors. This is an optional,
+	advanced property required only if using custom PathMatcher implementations that support mapping
+	metadata other than the Ant path patterns supported by default.
+					]]></xsd:documentation>
+					<xsd:appinfo>
+						<tool:annotation kind="ref">
+							<tool:expected-type type="java:org.springframework.util.PathMatcher" />
+						</tool:annotation>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+
+
+
+</xsd:schema>

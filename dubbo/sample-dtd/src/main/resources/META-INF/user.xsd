@@ -1,11 +1,27 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.lexueba.com/schema/user"
-	xmlns:tns="http://www.lexueba.com/schema/user" elementFormDefault="qualified">
-	<element name="user">
-		<complexType>
-			<attribute name="id" type="string" />
-			<attribute name="userName" type="string" />
-			<attribute name="email" type="string" />
-		</complexType>
-	</element>
-</schema>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://code.alibabatech.com/schema/dubbo"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:tool="http://www.springframework.org/schema/tool"
+	targetNamespace="http://localhost/schema/user">
+
+	<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+	<xsd:import namespace="http://www.springframework.org/schema/beans" />
+	<xsd:import namespace="http://www.springframework.org/schema/tool" />
+	<xsd:annotation>
+		<xsd:documentation><![CDATA[ 自定义schema ]]></xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="user">
+	<xsd:complexType>
+		<xsd:complexContent>
+			<xsd:extension base="beans:identifiedType">
+				<xsd:attribute name="name" type="xsd:string" />
+				<xsd:attribute name="age" type="xsd:int" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+</xsd:element>
+
+
+
+
+</xsd:schema>

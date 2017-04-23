@@ -8,5 +8,5 @@
 	default-autowire="byName">
 
 	<dubbo:reference id="userService" interface="org.sample.shard.intf.UserService"
-		protocol="dubbo" version="${dubbo.version}" timeout="5000" check="false" />
+		protocol="dubbo" version="${dubbo.version}" filter="ConsumerFilter"  timeout="5000" check="false" />
 </beans>

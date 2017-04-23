@@ -1,1 +1,2 @@
-http\://www.lexueba.com/schema/user=vip.spring.demo.customTag.MyNamespaceHandler
+http\://localhost/schema/user=spring.demo.filter.MyNamespaceHandler
+http\://localhost/schema/values=spring.demo.filter.ValueNamespaceHandler
