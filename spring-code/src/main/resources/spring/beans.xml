@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="  
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd  
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd"
+	default-lazy-init="true">
+
+	<bean id="messageDao" class="com.demo.bean.MessageDao"  />
+
+	<bean id="messageAction" class="com.demo.bean.MessageAction" init-method="init" destroy-method="destory">
+		<property name="dao" ref="messageDao"></property>
+	</bean>
+
+<!-- 	<bean id="messageAction" class="com.demo.bean.MessageAction"> -->
+<!-- 		<constructor-arg index="0" name="dao" ref="messageDao" -->
+<!-- 			type="com.demo.bean.MessageDao" value=""></constructor-arg> -->
+<!-- 	</bean> -->
+
+
+<!-- 	<bean id="messageDao" class="com.demo.bean.MessageDaoFactory" -->
+<!-- 		factory-method="doInstance" /> -->
+
+
+<!-- 	<bean id="messageDaoFactory" class="com.demo.bean.MessageDaoFactory"></bean> -->
+	
+<!-- 	<bean id="messageDao" factory-bean="messageDaoFactory" factory-method="getInstance"></bean> -->
+</beans>  

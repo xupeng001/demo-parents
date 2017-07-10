@@ -7,7 +7,7 @@ import org.springframework.statemachine.annotation.OnTransitionEnd;
 import org.springframework.statemachine.annotation.OnTransitionStart;
 import org.springframework.statemachine.annotation.WithStateMachine;
 
-@WithStateMachine
+//@WithStateMachine
 public class EventConfig {
 
     private Logger logger = LoggerFactory.getLogger(getClass());

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="    
+           http://www.springframework.org/schema/beans    
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd    
+           http://www.springframework.org/schema/aop    
+           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd  
+           http://www.springframework.org/schema/context    
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	<!-- 配置数据源 -->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://127.0.0.1:3306/test" />
+		<property name="username" value="root" />
+		<property name="password" value="root" />
+	</bean>
+	<!--配置一个JdbcTemplate实例，并将这个“共享的”，“安全的”实例注入到不同的DAO类中去 -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+<!-- 		<property name="dataSource" ref="dataSource" /> -->
+		<constructor-arg index="0" ref="dataSource" />
+	</bean>
+	<!-- 声明事务管理器 -->
+	<bean id="txManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<!-- 需要实施事务增强的目标业务Bean -->
+	<bean id="libraryTarget" class="com.demo.dao.impl.MessageDaoImpl"
+		p:jdbcTemplate-ref="jdbcTemplate" />
+
+	<!-- 使用事务代理工厂类为目标业务Bean提供事务增强 -->
+	<bean id="libraryFactory"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
+		p:transactionManager-ref="txManager" p:target-ref="libraryTarget">
+		<!-- 事务属性配置 -->
+		<property name="transactionAttributes">
+			<props>
+				<!-- 以get开头的方法采用只读型事务控制类型 -->
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<!-- 所有方法均进行事务控制，如果当前没有事务，则新建一个事务 -->
+				<prop key="insert">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+
+	</bean>
+</beans> 

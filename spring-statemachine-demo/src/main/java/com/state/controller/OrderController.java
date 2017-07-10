@@ -1,10 +1,11 @@
 package com.state.controller;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-
 
 import com.state.config.SimpleStateMachineConfig;
 import org.springframework.statemachine.config.StateMachineFactory;
@@ -33,54 +34,41 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class OrderController {
 
-	@Autowired
 	private StateMachine<States, Events> stateMachine;
-	StateMachineFactory<States, Events> factory;
+	@Autowired
+	private StateMachineFactory<States, Events> factory;
+
+	private final Map<String, StateMachine<States, Events>> machines = new HashMap<>();
+
+	private String orderId = UUID.randomUUID().toString();
+
+	private synchronized StateMachine<States, Events> getMachine(String id) {
+		orderId = UUID.randomUUID().toString();
+		StateMachine<States, Events> machine = machines.get(id);
+		if (machine == null) {
+			machine = factory.getStateMachine(id);
+			machines.put(id, machine);
+		}
+		return machine;
+	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public String createOrder(HttpServletRequest request) {
-
+		stateMachine = getMachine(orderId);
 		stateMachine.start();
-		System.out.println(stateMachine);
-		ServletContext context = request.getSession().getServletContext();
-		WebApplicationContext ctx = WebApplicationContextUtils
-				.getWebApplicationContext(context);
-
-		StateMachine bean = ctx.getBean(StateMachine.class);
- 		System.out.println(bean);
-		// stateMachine = new ObjectStateMachineFactory(
-		// new StateMachineModel<States, Events>() {
-		//
-		// @Override
-		// public ConfigurationData<States, Events> getConfigurationData() {
-		// // TODO Auto-generated method stub
-		// return null;
-		// }
-		//
-		// @Override
-		// public StatesData<States, Events> getStatesData() {
-		// // TODO Auto-generated method stub
-		// return null;
-		// }
-		//
-		// @Override
-		// public TransitionsData<States, Events> getTransitionsData() {
-		// // TODO Auto-generated method stub
-		// return null;
-		// }
-		//
-		// }).
 		return UUID.randomUUID().toString();
 	}
 
 	@RequestMapping(value = "/pay", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public String payOrder() {
+		stateMachine = getMachine(orderId);
 		stateMachine.sendEvent(Events.PAY);
 		return UUID.randomUUID().toString();
 	}
 
 	@RequestMapping(value = "/receive", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public String receiveOrder() {
+		stateMachine = getMachine(orderId);
 		stateMachine.sendEvent(Events.RECEIVE);
 		stateMachine.stop();
 		return UUID.randomUUID().toString();
@@ -88,6 +76,7 @@ public class OrderController {
 
 	@RequestMapping(value = "/state", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public String stateOrder() {
+		stateMachine = getMachine(orderId);
 		State<States, Events> state = stateMachine.getState();
 		System.out.println(state);
 		return UUID.randomUUID().toString();
