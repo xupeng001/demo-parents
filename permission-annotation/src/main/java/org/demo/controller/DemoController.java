@@ -5,12 +5,12 @@ import org.demo.annotations.DemoAspect;
 import org.demo.annotations.DemoPermission;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+@DemoPermission
 @RestController
 public class DemoController {
 
 	@DemoAspect(name = DemoFactory.NAME)
-	@DemoPermission
+//	@DemoPermission
 	@RequestMapping("/demo")
 	public String demo(String name) {
 		System.out.println("demo--->" + name);

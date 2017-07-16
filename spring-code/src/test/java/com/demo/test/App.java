@@ -1,7 +1,8 @@
-package com.demo;
+package com.demo.test;
+
+import com.demo.BeanPostPrcessorImpl;
 
 import org.springframework.beans.factory.xml.XmlBeanFactory;
-
 import org.springframework.core.io.ClassPathResource;
 import org.junit.Test;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;

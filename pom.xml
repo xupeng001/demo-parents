@@ -24,6 +24,7 @@
 		<module>spring-tx</module>
 		<module>nio-sample</module>
 		<module>permission-annotation</module>
+		<module>springboot-mock</module>
 	</modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

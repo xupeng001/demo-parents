@@ -18,8 +18,12 @@ import org.demo.controller.DemoFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Aspect
-@Component
+/**
+ * @author xupeng
+ * @annotation
+ */
+//@Aspect
+//@Component
 public class PermissionAspect {
 
 	@Autowired(required = false)
