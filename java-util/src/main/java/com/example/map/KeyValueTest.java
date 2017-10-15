@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.function.BiConsumer;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
@@ -34,8 +35,14 @@ public class KeyValueTest {
         map = new HashMap<String, String>();
         map.put(null, "a");
         System.out.println(map.get(null));
-        map = new Hashtable<String, String>();
-        map.put( "a",null);
+
+        map = new TreeMap<String, String>();
+        map.put("a", null);
+        map.put(null, "a");
         System.out.println(map.get(null));
+        map = new Hashtable<String, String>();
+        map.put("a", null);
+        System.out.println(map.get(null));
+
     }
 }
