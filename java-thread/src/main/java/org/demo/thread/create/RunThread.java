@@ -29,8 +29,8 @@ public class RunThread implements Runnable {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
         }
-        System.out.println(getName() + "-->  id: " + Thread.currentThread().getId() + "   activeCount : " + Thread.activeCount()
-                + "   status :" + Thread.currentThread().getState());
+        System.out.println(getName() + "-->  id: " + Thread.currentThread().getId() + "   activeCount : "
+                + Thread.activeCount() + "   status :" + Thread.currentThread().getState());
 
     }
 
@@ -40,7 +40,7 @@ public class RunThread implements Runnable {
     }
 
     public RunThread(String name) {
-        
+
         this.name = name;
     }
 
